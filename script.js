@@ -1,9 +1,9 @@
 const nodes = [
-  { id: 'E4', label: 'WORK-STACK', x: 400, y: 300, url: '#' },
-  { id: 'E1', label: 'NAVIDSTAD', x: 200, y: 150, url: '#' },
-  { id: 'E2', label: 'CHEM / NUKE', x: 600, y: 150, url: '#' },
-  { id: 'E3', label: 'HANDIBOOK', x: 200, y: 450, url: 'https://github.com/0x00ctrl/CyberSec-Books' },
-  { id: 'E5', label: 'DISCORD', x: 600, y: 450, url: '#' }
+  { id: 'E4', label: 'WORK-STACK', x: 400, y: 300, url: 'https://github.com/Inn-Visible/EigenStack/blob/main/eigen/e4_workstack/00_index.md' },
+  { id: 'E1', label: 'NAVIDSTAD', x: 200, y: 150, url: 'https://github.com/Inn-Visible/EigenStack/blob/main/eigen/e1_navidstad.md' },
+  { id: 'E2', label: 'CHEM / NUKE', x: 600, y: 150, url: 'https://github.com/Inn-Visible/EigenStack/blob/main/eigen/e2_chem_nuke_solar.md' },
+  { id: 'E3', label: 'HANDIBOOK', x: 200, y: 450, url: 'https://github.com/Inn-Visible/EigenStack/blob/main/eigen/e3_handibook.md' },
+  { id: 'E5', label: 'DISCORD', x: 600, y: 450, url: 'https://discord.gg/7k2sNHS3n' }
 ];
 
 const edgesGroup = document.getElementById('edges');
