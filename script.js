@@ -1,4 +1,4 @@
-// ============ CARD CONTENT (sleek in-house skin) ============
+// ============ CARD CONTENT (in-house skin) ============
 const cards = {
   E1: {
     title: '// E1 — NAVIDSTAD',
@@ -22,7 +22,7 @@ const cards = {
         <li>Peace is happiness at rest; happiness is peace in motion.</li>
         <li>Impatience with actions, patience with results.</li>
       </ul>
-      <h2>Slots (vetting)</h2>
+      <h2>Slots (vetting, from the spine's own list)</h2>
       <ul>
         <li>Slot 2 candidates: <em>Poor Charlie's Almanack</em> · <em>Skin in the Game</em></li>
         <li>Slot 3 candidates: <em>Meditations</em> · <em>The Beginning of Infinity</em></li>
@@ -44,11 +44,12 @@ const cards = {
       </ol>
       <h2>Field notes (Klein)</h2>
       <ul>
-        <li>Not memorization — one long story. Learn the plot, the terminology follows.</li>
-        <li>Resonance: two commandments — never break a single bond, never exceed the octet.</li>
+        <li>Not memorization — one long story. Learn the plot; the terminology follows.</li>
+        <li>Resonance, two commandments: never break a single bond; never exceed an octet.</li>
         <li>Acidity: ARIO — Atom, Resonance, Induction, Orbital.</li>
-        <li>Mechanisms: four patterns — nucleophilic attack, proton transfer, loss of a leaving group, rearrangement.</li>
-        <li>SN1 vs SN2: electrophile, nucleophile, leaving group, solvent. Weigh the four.</li>
+        <li>Mechanisms, four patterns: nucleophilic attack, proton transfer, loss of a leaving group, rearrangement.</li>
+        <li>SN1 vs SN2: weigh electrophile, nucleophile, leaving group, solvent.</li>
+        <li>Margin: hydrogen bonds are "temporary, or fleeting" — covalent bonds hold. The foundation agrees.</li>
       </ul>
       <h2>Nuke (vetting)</h2>
       <ul><li><em>Introduction to Nuclear Science</em> — Lewins</li></ul>
@@ -65,8 +66,7 @@ const cards = {
       Training Guide</strong> — Deviant Ollam</p>
       <h2>Doors (rotate if one rots)</h2>
       <ul>
-        <li>Primary: <a href="https://github.com/0x00ctrl/CyberSec-Books"
-        target="_blank" rel="noopener">github.com/0x00ctrl/CyberSec-Books</a></li>
+        <li>Primary: <a href="https://github.com/0x00ctrl/CyberSec-Books" target="_blank" rel="noopener">github.com/0x00ctrl/CyberSec-Books</a></li>
         <li>Alt: search "Practical Lock Picking Deviant Ollam"</li>
       </ul>
       <h2>Why this card exists</h2>
@@ -105,3 +105,77 @@ const cards = {
       <p class="feeds">FEEDS → AXIOM (execution) · KEYSTONE (leverage)</p>`
   }
 };
+
+// ============ CONSTELLATION (4 vertices, no center) ============
+const nodes = [
+  { id: 'E1', label: 'NAVIDSTAD',   x: 400, y: 140 },
+  { id: 'E2', label: 'CHEM / NUKE', x: 620, y: 300 },
+  { id: 'E3', label: 'HANDIBOOK',   x: 400, y: 460 },
+  { id: 'E4', label: 'WORK-STACK',  x: 180, y: 300 }
+];
+
+const links = [[0,1],[1,2],[2,3],[3,0],[0,2],[1,3]];
+
+const edgesGroup = document.getElementById('edges');
+const verticesGroup = document.getElementById('vertices');
+
+links.forEach(([a, b]) => {
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', nodes[a].x);
+  line.setAttribute('y1', nodes[a].y);
+  line.setAttribute('x2', nodes[b].x);
+  line.setAttribute('y2', nodes[b].y);
+  line.setAttribute('class', 'edge-line');
+  edgesGroup.appendChild(line);
+});
+
+nodes.forEach(node => {
+  const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  group.setAttribute('class', 'node-group');
+  group.style.cursor = 'pointer';
+
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttribute('cx', node.x);
+  circle.setAttribute('cy', node.y);
+  circle.setAttribute('r', 35);
+  circle.setAttribute('class', 'node-circle');
+
+  const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  text.setAttribute('x', node.x);
+  text.setAttribute('y', node.y);
+  text.setAttribute('class', 'node-text');
+  text.textContent = node.id;
+
+  const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  label.setAttribute('x', node.x);
+  label.setAttribute('y', node.y + 55);
+  label.setAttribute('class', 'node-label');
+  label.textContent = node.label;
+
+  group.appendChild(circle);
+  group.appendChild(text);
+  group.appendChild(label);
+  group.addEventListener('click', () => openCard(node.id));
+  verticesGroup.appendChild(group);
+});
+
+// ============ CARD VIEW (guarded, never kills the constellation) ============
+const cardView  = document.getElementById('card-view');
+const cardTitle = document.getElementById('card-title');
+const cardBody  = document.getElementById('card-body');
+const cardClose = document.getElementById('card-close');
+
+function openCard(id) {
+  if (!cardView) return;
+  cardTitle.textContent = cards[id].title;
+  cardBody.innerHTML = cards[id].body;
+  cardBody.scrollTop = 0;
+  cardView.classList.remove('hidden');
+}
+function closeCard() {
+  if (!cardView) return;
+  cardView.classList.add('hidden');
+}
+if (cardClose) cardClose.addEventListener('click', closeCard);
+if (cardView) cardView.addEventListener('click', e => { if (e.target === cardView) closeCard(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCard(); });
